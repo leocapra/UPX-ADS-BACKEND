@@ -27,9 +27,6 @@ export class GetUserProfileUseCase {
       throw new AppError("Usuário não encontrado", 404);
     }
 
-    // Você pode adicionar qualquer lógica adicional de negócios aqui
-    // Ex: verificar se o usuário está ativo, etc.
-
     return {
       id: user.id,
       nome: user.nome,

@@ -1,5 +1,5 @@
+import { AppError } from "@/errors/AppError";
 import { Request, Response, NextFunction } from "express";
-import { AppError } from "../../errors/AppError";
 
 // Tipagem local para garantir que `request.user` esteja disponível
 interface AuthenticatedRequest extends Request {
@@ -19,6 +19,7 @@ export function ensureAuthorized(roles: number[]) {
       throw new AppError("Usuário não autenticado", 401);
     }
 
+    // Verifica se o role_id do usuário está na lista de roles permitidos
     if (!roles.includes(request.user.role_id)) {
       throw new AppError("Acesso não autorizado", 403);
     }

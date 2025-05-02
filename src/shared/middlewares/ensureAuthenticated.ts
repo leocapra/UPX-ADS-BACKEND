@@ -2,6 +2,7 @@ import { AppError } from "@/errors/AppError";
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 
+// Defina a interface JwtPayload diretamente aqui
 interface JwtPayload {
   id: number;
   role_id: number;
@@ -33,10 +34,11 @@ export function ensureAuthenticated(
     const decoded = jwt.verify(
       token,
       process.env.JWT_SECRET || "default_secret"
-    ) as JwtPayload;
+    ) as JwtPayload; // Agora a interface JwtPayload é reconhecida
 
+    // Atribuindo as informações do usuário à request
     request.user = {
-      id: Number(decoded.sub),
+      id: Number(decoded.sub), // Garantir que o id seja um número
       role_id: decoded.role_id,
     };
 

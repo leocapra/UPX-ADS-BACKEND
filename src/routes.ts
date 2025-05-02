@@ -5,6 +5,8 @@ import { AuthenticateUserController } from "./modules/Users/UseCases/Authenticat
 import { ensureAuthenticated } from "./shared/middlewares/ensureAuthenticated";
 import { GetUserProfileController } from "./modules/Users/UseCases/GetUserProfile/GetUserProfileController";
 import { ensureAuthorized } from "./shared/middlewares/ensureAuthorized";
+import { UpdateAvatarController } from "./modules/Users/UseCases/UpdateAvatar/UpdateAvatarController";
+import { UpdateUserController } from "./modules/Users/UseCases/UpdateUser/UpdateUserController";
 
 const routes = Router();
 
@@ -21,5 +23,9 @@ routes.get(
     response.json({ message: "Acesso de administrador permitido" });
   }
 );
+
+routes.put("/avatar", ensureAuthenticated, UpdateAvatarController.handle);
+
+routes.put("/user", ensureAuthenticated, UpdateUserController.handle); 
 
 export default routes;

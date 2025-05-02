@@ -7,4 +7,6 @@ export interface IUserRepository {
   findByEmail(email: string): Promise<User | null>;
   findByCpf(cpf_cnpj: string): Promise<User | null>;
   findById(id: number): Promise<User | undefined>;
+  save(user: User): Promise<User>;
+
 }

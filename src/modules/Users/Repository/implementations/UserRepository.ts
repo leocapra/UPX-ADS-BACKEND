@@ -29,4 +29,8 @@ export class UserRepository implements IUserRepository {
     const user = await this.repository.findOne({ where: { id } });
     return user || undefined;
   }
+
+  async save(user: User): Promise<User> {
+    return this.repository.save(user);
+  }
 }

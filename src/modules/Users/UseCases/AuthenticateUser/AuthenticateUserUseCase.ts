@@ -4,6 +4,7 @@ import jwt from "jsonwebtoken";
 import { IUserRepository } from "../../Repository/IUserRepository";
 import { AppError } from "../../../../errors/AppError";
 import { User } from "../../entities/Users";
+import { AddToSetOperators } from "typeorm";
 
 interface IRequest {
   email: string;
@@ -17,6 +18,9 @@ interface IResponse {
     nome: string;
     email: string;
     role_id: number;
+    telefone: string;
+    universidade: string;
+    curso: string;
   };
   token: string;
 }
@@ -30,6 +34,7 @@ export class AuthenticateUserUseCase {
 
   async execute({ email, senha, role }: IRequest): Promise<IResponse> {
     const user = await this.userRepository.findByEmail(email);
+    console.log('user', user)
 
     if (!user) {
       throw new AppError("Credenciais inválidas: Verifique seu E-mail", 401);
@@ -63,6 +68,9 @@ export class AuthenticateUserUseCase {
         nome: user.nome,
         email: user.email,
         role_id: user.role_id,
+        telefone: user.telefone,
+        universidade: user.universidade,
+        curso: user.curso,
       },
       token,
     };

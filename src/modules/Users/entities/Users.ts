@@ -20,7 +20,7 @@ export class User {
   @Column({ length: 20, nullable: true })
   telefone!: string;
   @Column({ nullable: true })
-  idade!: number;
+  avatar!: string;
 
   @Column({ name: "cpf_cnpj", length: 20, nullable: false, unique: true })
   cpf_cnpj!: string;
