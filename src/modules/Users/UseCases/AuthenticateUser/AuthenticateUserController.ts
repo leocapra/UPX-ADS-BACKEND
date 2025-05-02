@@ -21,19 +21,16 @@ export class AuthenticateUserController {
         AuthenticateUserUseCase
       );
 
-      const user = await authenticateUserUseCase.execute({
+      const { user, token } = await authenticateUserUseCase.execute({
         email,
         senha,
         role,
       });
 
-      if (!user) {
-        throw new AppError("Email ou senha incorretos", 401);
-      }
-
       response.status(200).json({
         message: "Autenticação bem-sucedida",
-        user, 
+        user,
+        token,
       });
     } catch (err) {
       if (err instanceof AppError) {

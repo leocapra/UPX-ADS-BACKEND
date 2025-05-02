@@ -9,11 +9,14 @@
     "skipLibCheck": true,
     "emitDecoratorMetadata": true,
     "useUnknownInCatchVariables": false,
-    "experimentalDecorators": true
+    "experimentalDecorators": true,
+    "typeRoots": ["./node_modules/@types", "./src/@types"],
+    "types": ["express"],
+    "baseUrl": "./src", // Define o diretório base para os caminhos
+    "paths": {
+      "@/*": ["*"]
+    }
   },
   "include": ["src/**/*"],
-  "exclude": ["node_modules"],
-  "paths": {
-    "@modules/*": ["src/modules/*"]
-  }
+  "exclude": ["node_modules"]
 }

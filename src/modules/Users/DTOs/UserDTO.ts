@@ -21,3 +21,15 @@ export interface IAuthenticateUserDTO {
   senha: string;
   role: number;
 }
+
+// src/modules/Users/DTOs/UserProfileDTO.ts
+export interface IUserProfileDTO {
+  id: number;
+  nome: string;
+  email: string;
+  role_id: number;
+  created_at: Date;
+  updated_at: Date;
+  // Poderia incluir campos calculados como:
+  // account_age_days?: number;
+}

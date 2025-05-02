@@ -24,4 +24,9 @@ export class UserRepository implements IUserRepository {
   async findByCpf(cpf_cnpj: string): Promise<User | null> {
     return this.repository.findOne({ where: { cpf_cnpj } });
   }
+
+  async findById(id: number): Promise<User | undefined> {
+    const user = await this.repository.findOne({ where: { id } });
+    return user || undefined;
+  }
 }

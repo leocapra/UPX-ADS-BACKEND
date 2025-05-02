@@ -6,4 +6,5 @@ export interface IUserRepository {
   create(data: ICreateUserDTO): Promise<User>;
   findByEmail(email: string): Promise<User | null>;
   findByCpf(cpf_cnpj: string): Promise<User | null>;
+  findById(id: number): Promise<User | undefined>;
 }

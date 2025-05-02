@@ -1,10 +1,25 @@
+// src/routes.ts
 import { Router } from "express";
 import { CreateUserController } from "./modules/Users/UseCases/CreateUser/CreateUserController";
 import { AuthenticateUserController } from "./modules/Users/UseCases/AuthenticateUser/AuthenticateUserController";
+import { ensureAuthenticated } from "./shared/middlewares/ensureAuthenticated";
+import { GetUserProfileController } from "./modules/Users/UseCases/GetUserProfile/GetUserProfileController";
+import { ensureAuthorized } from "./shared/middlewares/ensureAuthorized";
 
 const routes = Router();
 
 routes.post("/register", CreateUserController.handle);
-routes.post("/login", AuthenticateUserController.handle)
+routes.post("/login", AuthenticateUserController.handle);
+
+routes.get("/profile", ensureAuthenticated, GetUserProfileController.handle);
+
+routes.get(
+  "/admin",
+  ensureAuthenticated,
+  ensureAuthorized([1]),
+  (request, response) => {
+    response.json({ message: "Acesso de administrador permitido" });
+  }
+);
 
 export default routes;

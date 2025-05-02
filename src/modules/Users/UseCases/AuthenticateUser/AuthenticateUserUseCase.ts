@@ -1,12 +1,24 @@
 import { inject, injectable } from "tsyringe";
 import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 import { IUserRepository } from "../../Repository/IUserRepository";
 import { AppError } from "../../../../errors/AppError";
+import { User } from "../../entities/Users";
 
 interface IRequest {
   email: string;
   senha: string;
   role: number;
+}
+
+interface IResponse {
+  user: {
+    id: number;
+    nome: string;
+    email: string;
+    role_id: number;
+  };
+  token: string;
 }
 
 @injectable()
@@ -16,7 +28,7 @@ export class AuthenticateUserUseCase {
     private userRepository: IUserRepository
   ) {}
 
-  async execute({ email, senha, role }: IRequest) {
+  async execute({ email, senha, role }: IRequest): Promise<IResponse> {
     const user = await this.userRepository.findByEmail(email);
 
     if (!user) {
@@ -30,9 +42,29 @@ export class AuthenticateUserUseCase {
     }
 
     if (user.role_id !== role) {
-      throw new AppError("Credenciais inválidas", 401); 
+      throw new AppError("Credenciais inválidas", 401);
     }
 
-    return user;
+    const token = jwt.sign(
+      {
+        id: user.id,
+        role_id: user.role_id,
+      },
+      process.env.JWT_SECRET || "default_secret",
+      {
+        subject: String(user.id),
+        expiresIn: "1d",
+      }
+    );
+
+    return {
+      user: {
+        id: user.id,
+        nome: user.nome,
+        email: user.email,
+        role_id: user.role_id,
+      },
+      token,
+    };
   }
 }
