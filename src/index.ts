@@ -6,6 +6,10 @@ import cors from "cors";
 import { AppDataSource } from "./data-source";
 import routes from "./routes";
 import { errorHandler } from "./shared/middlewares/errorHandler";
+import { createServer } from "http";
+import { Server } from "socket.io";
+
+let io: Server; // 👈 Variável io no escopo global do módulo
 
 async function startServer() {
   try {
@@ -16,6 +20,21 @@ async function startServer() {
     console.log("📦 Migrations executed!");
 
     const app = express();
+    const server = createServer(app);
+
+    io = new Server(server, {
+      cors: {
+        origin: "*",
+      },
+    });
+
+    io.on("connection", (socket) => {
+      console.log("🟢 Novo socket conectado:", socket.id);
+
+      socket.on("disconnect", () => {
+        console.log("🔴 Socket desconectado:", socket.id);
+      });
+    });
 
     app.use(
       cors({
@@ -33,7 +52,6 @@ async function startServer() {
     });
 
     app.use("/api", routes);
-
     app.use(errorHandler);
 
     app.use((req, res) => {
@@ -41,8 +59,8 @@ async function startServer() {
     });
 
     const PORT = process.env.PORT || 3000;
-    app.listen(PORT, () => {
-      console.log(`🚀 Server running on http://localhost:${PORT}`);
+    server.listen(PORT, () => {
+      console.log(`🚀 Server + WebSocket running on http://localhost:${PORT}`);
     });
   } catch (error) {
     console.error("❌ Failed to start server:", error);
@@ -51,3 +69,5 @@ async function startServer() {
 }
 
 startServer();
+
+export { io };

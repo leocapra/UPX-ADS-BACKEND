@@ -19,8 +19,18 @@ export class UpdateUserController {
     next: NextFunction
   ): Promise<void> {
     try {
-      const { email, universidade, curso, telefone } = request.body;
-      console.log("request.body", request.body)
+      const {
+        email,
+        universidade,
+        curso,
+        telefone,
+        ano_veiculo,
+        cor_veiculo,
+        veiculo,
+        placa,
+        numero_cnh,
+      } = request.body;
+      console.log("request.body", request.body);
       const userId = Number(request.user?.id);
 
       const updateUserUseCase = container.resolve(UpdateUserUseCase);
@@ -31,6 +41,11 @@ export class UpdateUserController {
         universidade,
         curso,
         telefone,
+        ano_veiculo,
+        cor_veiculo,
+        veiculo,
+        placa,
+        numero_cnh,
       });
 
       response.status(200).json({
@@ -42,6 +57,11 @@ export class UpdateUserController {
           curso: user.curso,
           telefone: user.telefone,
           role_id: user.role_id,
+          ano_veiculo: user.ano_veiculo,
+          cor_veiculo: user.cor_veiculo,
+          veiculo: user.veiculo,
+          placa: user.placa,
+          numero_cnh: user.numero_cnh,
         },
       });
     } catch (err) {

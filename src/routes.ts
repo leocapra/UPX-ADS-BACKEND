@@ -7,6 +7,7 @@ import { GetUserProfileController } from "./modules/Users/UseCases/GetUserProfil
 import { ensureAuthorized } from "./shared/middlewares/ensureAuthorized";
 import { UpdateAvatarController } from "./modules/Users/UseCases/UpdateAvatar/UpdateAvatarController";
 import { UpdateUserController } from "./modules/Users/UseCases/UpdateUser/UpdateUserController";
+import { CreateCorridaController } from "./modules/Corridas/UseCases/CreateCorrida/CreateCorridaController";
 
 const routes = Router();
 
@@ -27,5 +28,8 @@ routes.get(
 routes.put("/avatar", ensureAuthenticated, UpdateAvatarController.handle);
 
 routes.put("/user", ensureAuthenticated, UpdateUserController.handle); 
+
+routes.post("/corridas", CreateCorridaController.handle); 
+
 
 export default routes;

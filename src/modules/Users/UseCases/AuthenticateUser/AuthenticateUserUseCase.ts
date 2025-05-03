@@ -21,6 +21,13 @@ interface IResponse {
     telefone: string;
     universidade: string;
     curso: string;
+    placa: string;
+    cor_veiculo: string;
+    ano_veiculo: number;
+    numero_cnh: string;
+    veiculo: string;
+    avatar: string;
+
   };
   token: string;
 }
@@ -71,6 +78,12 @@ export class AuthenticateUserUseCase {
         telefone: user.telefone,
         universidade: user.universidade,
         curso: user.curso,
+        placa: user.placa,
+        cor_veiculo: user.cor_veiculo,
+        veiculo: user.veiculo,
+        ano_veiculo: user.ano_veiculo,
+        numero_cnh: user.numero_cnh,
+        avatar: user.avatar,
       },
       token,
     };
