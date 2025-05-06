@@ -68,7 +68,7 @@ O **BoraUni** Backend é a API que suporta o aplicativo mobile de carona compart
 
 ## 3. Considerações Finais
 
-Caso tenha algum problema durante a execução do projeto ou dúvidas, entre em contato comigo no número **15981518395** para suporte.
+Caso tenha algum problema durante a execução do projeto ou dúvidas, entre em contato comigo no número * para suporte.
 
 ---
 
