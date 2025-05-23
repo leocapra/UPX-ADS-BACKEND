@@ -14,5 +14,6 @@ export interface ICorridasRepository {
   finishCorrida(id: string): Promise<Corrida>;
   rateCorrida(id: string, rating: number): Promise<Corrida>;
   save(corrida: Corrida): Promise<Corrida>;
+  getRideByNotAccept(): Promise<Corrida[]>;
 
 }

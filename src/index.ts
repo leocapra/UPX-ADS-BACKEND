@@ -16,8 +16,8 @@ async function startServer() {
     await AppDataSource.initialize();
     console.log("✅ Database connected!");
 
-    await AppDataSource.runMigrations();
-    console.log("📦 Migrations executed!");
+    // await AppDataSource.runMigrations();
+    // console.log("📦 Migrations executed!");
 
     const app = express();
     const server = createServer(app);
@@ -29,10 +29,10 @@ async function startServer() {
     });
 
     io.on("connection", (socket) => {
-      console.log("🟢 Novo socket conectado:", socket.id);
+      // console.log("🟢 Novo socket conectado:", socket.id);
 
       socket.on("disconnect", () => {
-        console.log("🔴 Socket desconectado:", socket.id);
+        // console.log("🔴 Socket desconectado:", socket.id);
       });
     });
 

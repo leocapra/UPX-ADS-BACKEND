@@ -11,6 +11,7 @@ class CorridasRepository implements ICorridasRepository {
   constructor() {
     this.repository = AppDataSource.getRepository(Corrida);
   }
+
   async create(data: ICreateCorridaDTO): Promise<Corrida> {
     const corrida = this.repository.create(data);
     await this.repository.save(corrida);
@@ -75,6 +76,14 @@ class CorridasRepository implements ICorridasRepository {
 
   async save(corrida: Corrida): Promise<Corrida> {
     return this.repository.save(corrida);
+  }
+
+  async getRideByNotAccept(): Promise<Corrida[]> {
+    return this.repository.query(`
+      select * from corridas a
+      join users u on a.client_id = u.id
+      where a.accept = false
+      `);
   }
 }
 

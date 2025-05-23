@@ -36,7 +36,8 @@ export class CreateUserUseCase {
       }
     }
 
-    const hashedPassword = await bcrypt.hash(data.senha, 10); 
+    const hashedPassword = await bcrypt.hash(data.senha, 10);
+
 
     const userData: ICreateUserDTO = {
       nome: data.nome,
