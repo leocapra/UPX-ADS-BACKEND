@@ -5,6 +5,7 @@ import { Corrida } from "../../entities/Corrida";
 import { ICorridasRepository } from "../../Repository/ICorridasRepository";
 import { IUserRepository } from "../../../Users/Repository/IUserRepository";
 import { io } from "@/index";
+import { AppError } from "@/errors/AppError";
 
 interface IRequest {
   client_id: number;
@@ -37,14 +38,14 @@ class CreateCorridaUseCase {
 
     const clientExists = await this.UserRepository.findById(data.client_id);
     if (!clientExists) {
-      throw new Error("Cliente não encontrado");
+      throw new AppError("Cliente não encontrado");
     }
 
     const activeCorrida = await this.CorridasRepository.findActiveByClientId(
       data.client_id
     );
     if (activeCorrida) {
-      throw new Error("Cliente já possui uma corrida em andamento");
+      throw new AppError("Cliente já possui uma corrida em andamento");
     }
 
     const corrida = await this.CorridasRepository.create({
@@ -70,7 +71,7 @@ class CreateCorridaUseCase {
 
   private validateInput(data: IRequest): void {
     if (!data.client_id) {
-      throw new Error("client_id é obrigatório");
+      throw new AppError("client_id é obrigatório");
     }
 
     if (
@@ -78,7 +79,7 @@ class CreateCorridaUseCase {
       typeof data.origem.latitude !== "number" ||
       typeof data.origem.longitude !== "number"
     ) {
-      throw new Error("Origem inválida");
+      throw new AppError("Origem inválida");
     }
 
     if (
@@ -87,7 +88,7 @@ class CreateCorridaUseCase {
       typeof Number(data.destino.longitude) !== "number" ||
       !data.destino.nome
     ) {
-      throw new Error("Destino inválido");
+      throw new AppError("Destino inválido");
     }
   }
 }

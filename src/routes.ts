@@ -9,6 +9,8 @@ import { UpdateAvatarController } from "./modules/Users/UseCases/UpdateAvatar/Up
 import { UpdateUserController } from "./modules/Users/UseCases/UpdateUser/UpdateUserController";
 import { CreateCorridaController } from "./modules/Corridas/UseCases/CreateCorrida/CreateCorridaController";
 import { GetRideController } from "./modules/Corridas/UseCases/GetRide/GetRideController";
+import { GetRideByIdController } from "./modules/Corridas/UseCases/GetRideById/GetRideByIdController";
+import { DeleteRideByIdController } from "./modules/Corridas/UseCases/DeleteRideById/DeleteRideByIdController";
 
 const routes = Router();
 
@@ -28,11 +30,14 @@ routes.get(
 
 routes.put("/avatar", ensureAuthenticated, UpdateAvatarController.handle);
 
-routes.put("/user", ensureAuthenticated, UpdateUserController.handle); 
+routes.put("/user", ensureAuthenticated, UpdateUserController.handle);
 
-routes.post("/corridas", CreateCorridaController.handle); 
+routes.post("/corridas", CreateCorridaController.handle);
 
-routes.get("/getRide", GetRideController.handle)
+routes.get("/getRide", GetRideController.handle);
 
+routes.post("/getRideById", GetRideByIdController.handle);
+
+routes.delete("/cancelRideById/:data", DeleteRideByIdController.handle);
 
 export default routes;

@@ -85,6 +85,20 @@ class CorridasRepository implements ICorridasRepository {
       where a.accept = false
       `);
   }
+
+  async getRideById(client_id: number): Promise<Corrida[]> {
+    return this.repository.query(`
+        select * from corridas
+        where client_id = ${client_id}
+        and active = true
+      `);
+  }
+
+  async deleteRideById(id: string): Promise<any> {
+    return this.repository.query(`
+      delete from corridas where id = '${id}'
+      `);
+  }
 }
 
 export { CorridasRepository };
