@@ -94,9 +94,102 @@ class CorridasRepository implements ICorridasRepository {
       `);
   }
 
+  async getRideByMyId(id: string): Promise<Corrida[]> {
+    return this.repository.query(`
+        SELECT
+        c.*,
+        cli.id AS client_id,
+        cli.nome AS client_nome,
+        cli.sobre_nome AS client_sobrenome,
+        cli.email AS client_email,
+        cli.telefone AS client_telefone,
+        cli.cpf_cnpj AS client_cpf,
+        cli.universidade AS client_universidade,
+        cli.curso AS client_curso,
+        mot.id AS driver_id,
+        mot.nome AS driver_nome,
+        mot.sobre_nome AS driver_sobrenome,
+        mot.email AS driver_email,
+        mot.telefone AS driver_telefone,
+        mot.cpf_cnpj AS driver_cpf,
+        mot.placa AS driver_placa,
+        mot.veiculo AS driver_veiculo,
+        mot.cor_veiculo AS driver_cor_veiculo,
+        mot.ano_veiculo AS driver_ano_veiculo,
+        mot.numero_cnh AS driver_cnh
+        FROM corridas c
+        left JOIN users cli ON c.client_id = cli.id
+        LEFT JOIN users mot ON c.driver_id = mot.id
+        WHERE c.id = '${id}'
+      `);
+  }
+
   async deleteRideById(id: string): Promise<any> {
     return this.repository.query(`
       delete from corridas where id = '${id}'
+      `);
+  }
+
+  async getRidePendingByClientId(client_id: number): Promise<Corrida[]> {
+    return this.repository.query(`
+    SELECT
+    c.*,
+    cli.id AS client_id,
+    cli.nome AS client_nome,
+    cli.sobre_nome AS client_sobrenome,
+    cli.email AS client_email,
+    cli.telefone AS client_telefone,
+    cli.cpf_cnpj AS client_cpf,
+    cli.universidade AS client_universidade,
+    cli.curso AS client_curso,
+    mot.id AS driver_id,
+    mot.nome AS driver_nome,
+    mot.sobre_nome AS driver_sobrenome,
+    mot.email AS driver_email,
+    mot.telefone AS driver_telefone,
+    mot.cpf_cnpj AS driver_cpf,
+    mot.placa AS driver_placa,
+    mot.veiculo AS driver_veiculo,
+    mot.cor_veiculo AS driver_cor_veiculo,
+    mot.ano_veiculo AS driver_ano_veiculo,
+    mot.numero_cnh AS driver_cnh
+    FROM corridas c
+    left JOIN users cli ON c.client_id = cli.id
+    LEFT JOIN users mot ON c.driver_id = mot.id
+    WHERE c.client_id = ${client_id}
+    AND c.active = true
+    AND c.accept = false;
+      `);
+  }
+  async getRidePendingById(id: string): Promise<Corrida[]> {
+    return this.repository.query(`
+    SELECT
+    c.*,
+    cli.id AS client_id,
+    cli.nome AS client_nome,
+    cli.sobre_nome AS client_sobrenome,
+    cli.email AS client_email,
+    cli.telefone AS client_telefone,
+    cli.cpf_cnpj AS client_cpf,
+    cli.universidade AS client_universidade,
+    cli.curso AS client_curso,
+    mot.id AS driver_id,
+    mot.nome AS driver_nome,
+    mot.sobre_nome AS driver_sobrenome,
+    mot.email AS driver_email,
+    mot.telefone AS driver_telefone,
+    mot.cpf_cnpj AS driver_cpf,
+    mot.placa AS driver_placa,
+    mot.veiculo AS driver_veiculo,
+    mot.cor_veiculo AS driver_cor_veiculo,
+    mot.ano_veiculo AS driver_ano_veiculo,
+    mot.numero_cnh AS driver_cnh
+    FROM corridas c
+    left JOIN users cli ON c.client_id = cli.id
+    LEFT JOIN users mot ON c.driver_id = mot.id
+    WHERE c.id = '${id}'
+    AND c.active = true
+    AND c.accept = false;
       `);
   }
 }

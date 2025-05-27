@@ -7,7 +7,6 @@ class CreateCorridaController {
   static async handle(request: Request, response: Response): Promise<void> {
     try {
       const createCorridaUseCase = container.resolve(CreateCorridaUseCase);
-      console.log('request body', request.body)
       const corrida = await createCorridaUseCase.execute(request.body);
 
       response.status(201).json(corrida);

@@ -11,6 +11,7 @@ import { CreateCorridaController } from "./modules/Corridas/UseCases/CreateCorri
 import { GetRideController } from "./modules/Corridas/UseCases/GetRide/GetRideController";
 import { GetRideByIdController } from "./modules/Corridas/UseCases/GetRideById/GetRideByIdController";
 import { DeleteRideByIdController } from "./modules/Corridas/UseCases/DeleteRideById/DeleteRideByIdController";
+import { UpdateAcceptRideByClientIdController } from "./modules/Corridas/UseCases/UpdateAcceptRideByClientId/UpdateAcceptRideByClientIdController";
 
 const routes = Router();
 
@@ -39,5 +40,7 @@ routes.get("/getRide", GetRideController.handle);
 routes.post("/getRideById", GetRideByIdController.handle);
 
 routes.delete("/cancelRideById/:data", DeleteRideByIdController.handle);
+
+routes.post("/acceptRideByClientId", UpdateAcceptRideByClientIdController.handle)
 
 export default routes;
