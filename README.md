@@ -1,203 +1,180 @@
-# 📱 BoraUni - FrontEnd- Aplicativo de Carona Universitária
+
+# 📡 BoraUni - Backend - API do Aplicativo de Carona Universitária
 
 ![Logo BoraUni](./assets/logo.png)
 
 ---
 
-## Índice
+## 📖 Índice
 
 - [1. Visão Geral](#1-visão-geral)
-- [2. Tecnologias Utilizadas](#2-tecnologias-utilizadas)
-- [3. Funcionalidades Principais](#3-funcionalidades-principais)
-- [4. Estrutura do Projeto](#4-estrutura-do-projeto)
-- [5. Roadmap de Desenvolvimento](#5-roadmap-de-desenvolvimento)
-- [6. Configuração do Ambiente](#6-configuração-do-ambiente)
-- [7. Como Rodar o Projeto](#7-como-rodar-o-projeto)
-- [8. Considerações Finais](#8-considerações-finais)
+- [2. Como Rodar o Projeto](#2-como-rodar-o-projeto)
+- [3. Scripts Disponíveis](#3-scripts-disponíveis)
+- [4. Gerenciamento de Migrações com TypeORM](#4-gerenciamento-de-migrações-com-typeorm)
+- [5. Arquitetura do Projeto](#5-arquitetura-do-projeto)
+- [6. Considerações Finais](#6-considerações-finais)
 
 ---
 
 ## 1. Visão Geral
 
-**Nome do Projeto:** BoraUni
+**Nome do Projeto:** BoraUni - Backend
 
 **Descrição:**
-O **BoraUni** é um aplicativo mobile de carona compartilhada para universitários, desenvolvido em **React Native** com Expo. Ele conecta estudantes que desejam dividir caronas para a faculdade, reduzindo custos, minimizando impactos ambientais e fortalecendo o espírito colaborativo.
-
-**Contexto Acadêmico:**
-
-- **Disciplina:** UPX - 4
-- **Semestre:** Semestre 4
-- **Universidade:** FACENS
-- **Professor:** FERNANDO XAVIER
+O **BoraUni** Backend é a API que suporta o aplicativo mobile de carona compartilhada para universitários. Desenvolvido utilizando **Node.js**, **TypeScript**, **TypeORM** e **Tsyringe**, ele fornece todos os endpoints necessários para o gerenciamento de caronas, usuários e outras funcionalidades essenciais.
 
 ---
 
-## 2. Tecnologias Utilizadas
+## 2. Como Rodar o Projeto
 
-**Frontend Mobile:**
+### Passo a Passo
 
-- React Native + Expo (CLI)
-- Expo Router / React Navigation
-- Axios para chamadas HTTP
-
-**Backend:**
-
-- Node.js e Express
-- TypeORM (com PostgreSQL)
-- Autenticação: JWT
-
-**Banco de Dados:**
-
-- PostgreSQL
-
-**Arquitetura & Padrões:**
-
-- SOLID
-- Injeção de Dependência
-
-**Infraestrutura:**
-
-- Docker (Containers para backend e banco)
-- Migrations & Seeds
-
----
-
-## 3. Funcionalidades Principais
-
-### 3.1 Autenticação
-
-- Registro e login de usuários (estudantes e motoristas)
-- Validação de entrada e segurança JWT
-
-### 3.2 Cadastro de Veículos (Motoristas)
-
-- Motoristas podem cadastrar informações do veículo (modelo, placa, vagas)
-
-### 3.3 Publicação e Busca de Caronas
-
-- Motoristas criam ofertas de carona: origem, destino, data/hora, vagas
-- Passageiros buscam caronas por filtros de rota e horário
-- Sistema de reserva e confirmação de vaga
-
-### 3.4 Chat em Tempo Real
-
-- Conversas entre motorista e passageiro para combinar detalhes
-- Notificações de novas mensagens
-
-### 3.5 Avaliação e Feedback
-
-- Motoristas e passageiros avaliam-se mutuamente após a viagem
-- Mecanismo de reputação para segurança
-
----
-
-## 4. Estrutura do Projeto
-
-```
-/borauni-app
-├── mobile/                 # App React Native (Expo)
-│   ├── assets/             # Logo, imagens, fontes
-│   ├── src/
-│   │   ├── components/     # Componentes reutilizáveis
-│   │   ├── screens/        # Telas (Login, Cadastro, Home, etc.)
-│   │   └── services/       # API calls (Axios)
-│   └── app.json            # Configuração do Expo
-├── server/                 # Backend Node.js
-│   ├── src/
-│   │   ├── controllers/
-│   │   ├── entities/       # TypeORM entities
-│   │   ├── migrations/
-│   │   ├── routes/
-│   │   └── index.ts        # Entrypoint
-│   ├── ormconfig.js        # Configuração TypeORM
-│   └── docker-compose.yml  # Serviços Docker
-└── README.md               # Documentação
-```
-
----
-
-## 5. Roadmap de Desenvolvimento
-
-1. **Planejamento & Setup**
-   - Definição da arquitetura
-   - Configuração Docker / Expo CLI
-2. **Backend**
-   - Entidades e migrations (usuário, veículo, carona)
-   - Endpoints de autenticação e CRUD de caronas
-3. **Mobile App**
-   - Telas de login, cadastro e fluxo de navegação
-   - Integração com API (Axios + JWT)
-4. **Recursos Avançados**
-   - Chat em tempo real (WebSocket ou Pusher)
-   - Sistema de avaliações
-5. **Testes & Deploy**
-   - Testes unitários e integração
-   - Deploy backend (Heroku, AWS, etc.) e app Expo
-
----
-
-## 6. Configuração do Ambiente
-
-### Pré-requisitos
-
-- Node.js ≥ 16.x
-- npm ou Yarn
-- Docker & Docker Compose
-- Expo CLI
-
-### Passo a passo
-
-1. Clone o repositório:
+1. **Clonar o Repositório**
    ```bash
-   git clone https://github.com/seu-usuario/borauni-app.git
-   cd borauni-app
+   git clone <link>
+   cd UPX-ADS-BACKEND
    ```
-2. Configurar variáveis de ambiente:
-   - Copie `.env.example` para `.env` e preencha
-3. Subir containers Docker:
+
+   > ⚠️ *Observação*: Caso tenha problemas com a chave SSH, solicite permissão para acesso ao repositório de forma segura, evitando a divulgação de chaves públicas. De qualquer forma recomendamos o download do zip para a nossa segurança
+
+2. **Trocar para o Branch `develop`**
    ```bash
-   docker-compose up -d
+   git checkout develop
    ```
-4. Instalar dependências backend:
+
+3. **Instalar Dependências**
    ```bash
-   cd server
-   npm install
-   npm run typeorm:run
-   ```
-5. Instalar dependências mobile:
-   ```bash
-   cd ../mobile
    npm install
    ```
 
----
+4. **Rodar o Docker**
+   ```bash
+   npm run dev:docker:up
+   ```
 
-## 7. Como Rodar o Projeto
+   > Este comando executa `docker-compose up -d`, iniciando os containers necessários para o backend e o banco de dados.
 
-### Backend
+5. **Rodar o Servidor**
+   ```bash
+   npm run dev
+   ```
 
-```bash
-cd server
-npm run dev
-```
-
-A API ficará disponível em `http://localhost:3000`.
-
-### Mobile App
-
-```bash
-cd mobile
-expo start
-```
-
-Use um emulador Android/iOS ou o app Expo Go para visualizar.
+6. **Verificar**
+   - Acesse `http://localhost:3000` para verificar se o servidor está rodando corretamente.
 
 ---
 
-## 8. Considerações Finais
+## 3. Scripts Disponíveis
 
-Este README serve como guia completo para configuração e desenvolvimento do **BoraUni**. Qualquer contribuição é bem-vinda! Para dúvidas ou sugestões, abra uma issue ou entre em contato.
+No arquivo `package.json`, os seguintes scripts estão disponíveis para facilitar o desenvolvimento:
+
+```json
+"scripts": {
+  "dev": "nodemon --watch src --exec ts-node -r tsconfig-paths/register src/index.ts",
+  "dev:docker:up": "docker-compose up -d",
+  "typeorm": "npx typeorm-ts-node-commonjs",
+  "build": "tsc",
+  "migration:run": "npm run typeorm migration:run -- --dataSource src/data-source.ts",
+  "migration:revert": "npm run typeorm migration:revert -- --dataSource src/data-source.ts",
+  "migration:create": "npx typeorm migration:create"
+}
+```
+
+---
+
+## 4. Gerenciamento de Migrações com TypeORM
+
+### Criar uma Nova Migração
+
+Para criar uma nova migração, execute:
+
+```bash
+npm run migration:create src/shared/database/migrations/<nome-da-migracao>
+```
+
+> Substitua `<nome-da-migracao>` pelo nome desejado para a migração.
+
+### Executar Migrações
+
+Para aplicar todas as migrações pendentes ao banco de dados:
+
+```bash
+npm run migration:run
+```
+
+### Reverter a Última Migração
+
+Para desfazer a última migração executada:
+
+```bash
+npm run migration:revert
+```
+
+> ⚠️ *Nota*: Este comando reverte apenas a última migração. Para reverter múltiplas migrações, execute o comando múltiplas vezes.
+
+### Limpar o Banco de Dados Local
+
+Para limpar todos os dados do banco de dados local e remover todas as tabelas do Docker:
+
+1. **Parar os Containers Docker**
+   ```bash
+   docker-compose down
+   ```
+
+ 2. **Parar os Containers Docker (dados persistentes e volumes)**
+      ```bash
+      docker-compose down -v
+      ```
+
+3. **Remover apenas os Volumes Docker**
+   ```bash
+   docker volume prune
+   ```
+
+4. **Reiniciar os Containers Docker**
+   ```bash
+   npm run dev:docker:up
+   ```
+
+---
+
+## 5. Arquitetura do Projeto
+
+Adotamos a arquitetura **SOLID** para garantir que o sistema seja escalável, manutenível e de fácil entendimento. A estrutura do código é organizada em módulos que seguem essa arquitetura. Abaixo, explicamos o módulo de registro de usuários como exemplo.
+
+### Estrutura do Módulo `register`
+
+- **DTO (Data Transfer Object):** Define como os dados são transferidos entre as camadas da aplicação, validando e formatando as informações.
+
+- **Controller:** Orquestra a comunicação entre a camada de entrada (API) e a lógica de negócios, recebendo requisições e delegando tarefas para o usecase.
+
+- **Usecase:** Contém a lógica de negócios, processando operações como o registro de um usuário e comunicando-se com o repositório para persistência de dados.
+
+- **Repository Interface:** Define os métodos que o repositório deve implementar, servindo como contrato para garantir a consistência.
+
+- **Repository Implementation:** Implementa a interface do repositório, interagindo com o banco de dados utilizando o TypeORM.
+
+- **Entity:** Representa o modelo de dados, mapeando a entidade para a estrutura real do banco de dados com o TypeORM.
+
+### Outras Tecnologias e Práticas
+
+- **Socket.io:** Implementa comunicação em tempo real entre os usuários, ideal para funções como notificações ou chat.
+
+- **TypeORM:** Utilizado para gerar migrations e seeds, facilitando a criação da estrutura do banco de dados e a popularização inicial com dados fictícios.
+
+- **Docker:** Cria um container do banco de dados PostgreSQL, garantindo isolamento e configuração idêntica em todos os ambientes de desenvolvimento.
+
+- **DBeaver:** Ferramenta utilizada para consultas SQL e administração do banco de dados, permitindo visualizar, consultar e manipular dados de forma simples.
+
+- **.env:** Armazena variáveis de ambiente, como configurações do banco de dados e porta do servidor, sendo carregado tanto para o Docker quanto para o `data-source.ts` do TypeORM.
+
+- **Container.ts:** Realiza a injeção de dependência com o `tsyringe`, fornecendo dependências de forma eficiente e sem acoplamento entre as classes.
+
+---
+
+## 6. Considerações Finais
+
+Caso tenha algum problema durante a execução do projeto ou dúvidas, entre em contato conosco para suporte.
 
 ---
 
