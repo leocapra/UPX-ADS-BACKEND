@@ -6,9 +6,12 @@
   "license": "MIT",
   "scripts": {
     "dev": "nodemon --watch src --exec ts-node -r tsconfig-paths/register src/index.ts",
-    "dev:docker": "docker-compose up -d",
+    "dev:docker:up": "docker-compose up -d",
     "typeorm": "npx typeorm-ts-node-commonjs",
-    "build": "tsc"
+    "build": "tsc",
+    "migration:run": "npm run typeorm migration:run -- --dataSource src/data-source.ts",
+    "migration:revert": "npm run typeorm migration:revert -- --dataSource src/data-source.ts",
+    "migration:create": "npx typeorm migration:create "
   },
   "devDependencies": {
     "@types/cors": "^2.8.17",

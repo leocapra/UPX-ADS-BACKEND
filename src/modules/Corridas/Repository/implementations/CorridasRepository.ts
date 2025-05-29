@@ -83,6 +83,7 @@ class CorridasRepository implements ICorridasRepository {
       select * from corridas a
       join users u on a.client_id = u.id
       where a.accept = false
+      and a.active = true
       `);
   }
 
@@ -92,6 +93,63 @@ class CorridasRepository implements ICorridasRepository {
         where client_id = ${client_id}
         and active = true
       `);
+  }
+
+  async getRideHistoryByIdStudent(client_id: number): Promise<Corrida[]> {
+    return this.repository.query(`
+      SELECT
+    c.*,
+    u.id as driver_user_id,
+    u.nome as driver_nome,
+    u.sobre_nome as driver_sobrenome,
+    u.email as driver_email,
+    u.telefone as driver_telefone,
+    u.cor_veiculo as driver_collor,
+    u.placa as driver_placa,
+    u.veiculo as driver
+    FROM corridas c
+    LEFT JOIN users u ON c.driver_id = u.id
+    WHERE c.client_id = ${client_id}
+      AND c.active = false
+    ORDER BY c.created_at DESC;
+        `);
+  }
+
+  async getRideHistoryByIdDriver(client_id: number): Promise<Corrida[]> {
+    return this.repository.query(`
+      SELECT
+          c.*,
+          u.id as student_user_id,
+          u.nome as student_nome,
+          u.sobre_nome as student_sobrenome,
+          u.email as student_email,
+          u.telefone as student_telefone,
+          u.universidade as student_universidade,
+          u.curso as student_curso
+        FROM corridas c
+        LEFT JOIN users u ON c.client_id = u.id
+        WHERE c.driver_id = ${client_id}
+        AND c.active = false
+        ORDER BY c.created_at DESC;
+        `);
+  }
+
+  async getActiveRideByDriverId(client_id: number): Promise<Corrida[]> {
+    return this.repository.query(`
+      SELECT
+          c.*,
+          u.id as student_user_id,
+          u.nome as student_nome,
+          u.sobre_nome as student_sobrenome,
+          u.email as student_email,
+          u.telefone as student_telefone,
+          u.universidade as student_universidade,
+          u.curso as student_curso
+        FROM corridas c
+        LEFT JOIN users u ON c.client_id = u.id
+        WHERE c.driver_id = ${client_id}
+        AND c.active = true
+        `);
   }
 
   async getRideByMyId(id: string): Promise<Corrida[]> {

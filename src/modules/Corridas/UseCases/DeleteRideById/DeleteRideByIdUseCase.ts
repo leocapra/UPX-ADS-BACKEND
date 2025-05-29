@@ -1,6 +1,6 @@
 import { inject, injectable } from "tsyringe";
 import { CorridasRepository } from "../../Repository/implementations/CorridasRepository";
-import { io } from "@/index"; // Importante: isso precisa estar igual ao create
+import { io } from "@/index";
 import { AppError } from "@/errors/AppError";
 
 @injectable()
@@ -14,6 +14,20 @@ class DeleteRideByIdUseCase {
     const existingRide = await this.corridasRepository.findById(rideId);
     if (!existingRide) {
       throw new AppError("Corrida não encontrada");
+    }
+
+    if (existingRide.accept === true) {
+      existingRide.active = false;
+      existingRide.accept = false;
+      existingRide.cancelled = true;
+      const updatedRide = await this.corridasRepository.save(existingRide);
+
+      io.emit("ride_cancelled", {
+        rideId: rideId,
+        clientId: existingRide.client_id,
+      });
+
+      return updatedRide;
     }
 
     const deleted = await this.corridasRepository.deleteRideById(rideId);

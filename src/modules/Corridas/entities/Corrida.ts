@@ -31,6 +31,10 @@ export class Corrida {
   @Column({ default: false })
   accept!: boolean;
 
+  @Column({ default: false })
+  cancelled!: boolean;
+
+
   // Novos campos de localização
   @Column("jsonb")
   origem!: {

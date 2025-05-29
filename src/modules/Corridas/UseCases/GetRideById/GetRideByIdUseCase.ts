@@ -11,7 +11,8 @@ class GetRideByIdUseCase {
 
   async execute(data: number): Promise<any> {
     const getRidesIfExists = await this.corridasRepository.getRideById(data);
-    console.log("getRidesIfExists", getRidesIfExists);
+
+  
 
     return getRidesIfExists;
   }

@@ -16,6 +16,9 @@ export interface ICorridasRepository {
   save(corrida: Corrida): Promise<Corrida>;
   getRideByNotAccept(): Promise<Corrida[]>;
   getRideById(client_id: number): Promise<Corrida[]>;
+  getRideHistoryByIdStudent(client_id: number): Promise<Corrida[]>;
+  getRideHistoryByIdDriver(client_id: number): Promise<Corrida[]>;
+  getActiveRideByDriverId(client_id: number): Promise<Corrida[]>;
   deleteRideById(id: string): Promise<any>;
   getRidePendingByClientId(client_id: number): Promise<Corrida[]>;
   getRidePendingById(id: string): Promise<Corrida[]>

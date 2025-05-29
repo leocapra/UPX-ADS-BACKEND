@@ -38,23 +38,22 @@ export class CreateUserUseCase {
 
     const hashedPassword = await bcrypt.hash(data.senha, 10);
 
-
     const userData: ICreateUserDTO = {
-      nome: data.nome,
-      sobre_nome: data.sobre_nome,
-      email: data.email,
+      nome: data.nome?.toUpperCase(),
+      sobre_nome: data.sobre_nome?.toUpperCase(),
+      email: data.email?.toLowerCase(),
       senha: hashedPassword,
       cpf_cnpj: data.cpf_cnpj,
       telefone: data.telefone,
       role_id: data.role_id,
-      universidade: data.universidade,
-      curso: data.curso,
-      placa: data.placa || undefined,
-      veiculo: data.veiculo || undefined,
-      cor_veiculo: data.cor_veiculo || undefined,
-      ano_veiculo: data.ano_veiculo || undefined,
-      numero_cnh: data.numero_cnh || undefined,
-      idade: data.idade || undefined,
+      universidade: data.universidade?.toUpperCase(),
+      curso: data.curso?.toUpperCase(),
+      placa: data.placa?.toUpperCase(),
+      veiculo: data.veiculo?.toUpperCase(),
+      cor_veiculo: data.cor_veiculo?.toUpperCase(),
+      ano_veiculo: data.ano_veiculo,
+      numero_cnh: data.numero_cnh,
+      idade: data.idade,
     };
 
     return this.userRepository.create(userData);
