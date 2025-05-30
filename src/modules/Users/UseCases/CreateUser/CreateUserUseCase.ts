@@ -38,6 +38,8 @@ export class CreateUserUseCase {
 
     const hashedPassword = await bcrypt.hash(data.senha, 10);
 
+    console.log("data.role_id", data.role_id);
+
     const userData: ICreateUserDTO = {
       nome: data.nome?.toUpperCase(),
       sobre_nome: data.sobre_nome?.toUpperCase(),

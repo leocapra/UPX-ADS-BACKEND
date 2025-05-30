@@ -17,6 +17,22 @@ interface IRequest {
   numero_cnh?: string;
 }
 
+function formatPhone(phone: string): string {
+  const digits = phone.replace(/\D/g, "");
+  if (digits.length === 11) {
+    return `(${digits.slice(0, 2)}) ${digits.slice(2, 7)}-${digits.slice(7)}`;
+  }
+  return phone;
+}
+
+function formatPlaca(placa: string): string {
+  const cleaned = placa.replace(/[^a-zA-Z0-9]/g, "").toUpperCase();
+  if (cleaned.length === 7) {
+    return `${cleaned.slice(0, 3)}-${cleaned.slice(3)}`;
+  }
+  return placa;
+}
+
 @injectable()
 export class UpdateUserUseCase {
   constructor(
@@ -61,10 +77,9 @@ export class UpdateUserUseCase {
 
     // Validação dos demais campos (pode ser null, mas não string vazia)
     if (telefone !== null && telefone !== undefined) {
+      console.log("Telefone recebido:", telefone); // 👈🏼 Adiciona isso
+
       this.validateStringNotBlank("telefone", telefone);
-      if (telefone.replace(/\D/g, "").length < 10) {
-        throw new AppError("Telefone inválido", 400);
-      }
     }
 
     // Validação genérica para outros campos string
@@ -93,13 +108,14 @@ export class UpdateUserUseCase {
     user.email = email;
 
     // Atualiza apenas os campos que não são undefined
-    if (telefone !== undefined) user.telefone = telefone;
-    if (universidade !== undefined) user.universidade = universidade;
-    if (curso !== undefined) user.curso = curso;
+    if (telefone !== undefined) user.telefone = formatPhone(telefone);
+    if (universidade !== undefined)
+      user.universidade = universidade.toUpperCase();
+    if (curso !== undefined) user.curso = curso.toUpperCase();
     if (ano_veiculo !== undefined) user.ano_veiculo = ano_veiculo;
-    if (cor_veiculo !== undefined) user.cor_veiculo = cor_veiculo;
-    if (veiculo !== undefined) user.veiculo = veiculo;
-    if (placa !== undefined) user.placa = placa;
+    if (cor_veiculo !== undefined) user.cor_veiculo = cor_veiculo.toUpperCase();
+    if (veiculo !== undefined) user.veiculo = veiculo.toUpperCase();
+    if (placa !== undefined) user.placa = formatPlaca(placa).toUpperCase();
     if (numero_cnh !== undefined) user.numero_cnh = numero_cnh;
 
     return this.userRepository.save(user);

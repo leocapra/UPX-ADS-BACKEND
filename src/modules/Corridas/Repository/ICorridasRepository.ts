@@ -23,6 +23,6 @@ export interface ICorridasRepository {
   getRidePendingByClientId(client_id: number): Promise<Corrida[]>;
   getRidePendingById(id: string): Promise<Corrida[]>;
   getRidePendingActiveById(id: string): Promise<Corrida[]>;
-
   getRideByMyId(id: string): Promise<Corrida[]>;
+  getRide(id: string): Promise<Corrida[]>;
 }

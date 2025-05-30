@@ -17,6 +17,9 @@ import { GetRideHistoryByIdDriverController } from "./modules/Corridas/UseCases/
 import { GetActiveRideByDriverIdController } from "./modules/Corridas/UseCases/GetActiveRideByDriverId/GetActiveRideByDriverIdController";
 import { DeleteRideByIdByDriverController } from "./modules/Corridas/UseCases/DeleteRideByIdByDriver/DeleteRideByIdByDriverController";
 import { FinishRideByIdController } from "./modules/Corridas/UseCases/FinishRideById/FinishRideByIdController";
+import { GetRideByIdToRatingController } from "./modules/Corridas/UseCases/GetRideByIdToRating/GetRideByIdToRatingController";
+import { RateRideController } from "./modules/Corridas/UseCases/RateRide/RateRideController";
+import { GetUserByIdController } from "./modules/Users/UseCases/GetUserById/GetUserByIdController";
 
 const routes = Router();
 
@@ -44,6 +47,10 @@ routes.get("/getRide", GetRideController.handle);
 
 routes.post("/getRideById", GetRideByIdController.handle);
 
+routes.post("/getUserById", GetUserByIdController.handle);
+
+routes.post("/getRideByIdToRating", GetRideByIdToRatingController.handle);
+
 routes.delete("/cancelRideById/:data", DeleteRideByIdController.handle);
 
 routes.delete(
@@ -55,6 +62,8 @@ routes.post(
   "/acceptRideByClientId",
   UpdateAcceptRideByClientIdController.handle
 );
+
+routes.post("/rateRide", RateRideController.handle);
 
 routes.post("/finishRideById", FinishRideByIdController.handle);
 

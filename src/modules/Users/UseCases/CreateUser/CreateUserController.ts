@@ -12,6 +12,7 @@ export class CreateUserController {
   ): Promise<void> {
     try {
       const data: ICreateUserDTO = request.body;
+      console.log("data", data);
 
       const createUserUseCase = container.resolve(CreateUserUseCase);
       const user = await createUserUseCase.execute(data);
