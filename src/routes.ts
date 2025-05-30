@@ -15,6 +15,8 @@ import { UpdateAcceptRideByClientIdController } from "./modules/Corridas/UseCase
 import { GetRideHistoryByIdStudentController } from "./modules/Corridas/UseCases/GetRideHistoryByIdStudent/GetRideHistoryByIdStudentController";
 import { GetRideHistoryByIdDriverController } from "./modules/Corridas/UseCases/GetRideHistoryByIdDriver/GetRideHistoryByIdDriverController";
 import { GetActiveRideByDriverIdController } from "./modules/Corridas/UseCases/GetActiveRideByDriverId/GetActiveRideByDriverIdController";
+import { DeleteRideByIdByDriverController } from "./modules/Corridas/UseCases/DeleteRideByIdByDriver/DeleteRideByIdByDriverController";
+import { FinishRideByIdController } from "./modules/Corridas/UseCases/FinishRideById/FinishRideByIdController";
 
 const routes = Router();
 
@@ -44,12 +46,31 @@ routes.post("/getRideById", GetRideByIdController.handle);
 
 routes.delete("/cancelRideById/:data", DeleteRideByIdController.handle);
 
-routes.post("/acceptRideByClientId", UpdateAcceptRideByClientIdController.handle)
+routes.delete(
+  "/cancelRideByIdByDriver/:data",
+  DeleteRideByIdByDriverController.handle
+);
 
-routes.post("/getRideHistoryByIdStudent", GetRideHistoryByIdStudentController.handle)
+routes.post(
+  "/acceptRideByClientId",
+  UpdateAcceptRideByClientIdController.handle
+);
 
-routes.post("/getRideHistoryByIdDriver", GetRideHistoryByIdDriverController.handle)
+routes.post("/finishRideById", FinishRideByIdController.handle);
 
-routes.post("/getActiveRideByDriverId", GetActiveRideByDriverIdController.handle)
+routes.post(
+  "/getRideHistoryByIdStudent",
+  GetRideHistoryByIdStudentController.handle
+);
+
+routes.post(
+  "/getRideHistoryByIdDriver",
+  GetRideHistoryByIdDriverController.handle
+);
+
+routes.post(
+  "/getActiveRideByDriverId",
+  GetActiveRideByDriverIdController.handle
+);
 
 export default routes;

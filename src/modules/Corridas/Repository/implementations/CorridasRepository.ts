@@ -89,9 +89,30 @@ class CorridasRepository implements ICorridasRepository {
 
   async getRideById(client_id: number): Promise<Corrida[]> {
     return this.repository.query(`
-        select * from corridas
-        where client_id = ${client_id}
-        and active = true
+        select 
+          a.id as id,
+          a.driver_id as driver_id,
+          a.client_id as client_id,
+          a.rating as rating,a.created_at,
+          a.active as active,
+          a.accept as accept,
+          a.origem as origem,
+          a.destino as destino,
+          a.cancelled as cancelled,
+          a.client02_id as client02_id,
+          b.id as driver_id,
+          b.nome as driver_nome,
+          b.sobre_nome as driver_sobrenome,
+          b.email as driver_email,
+          b.telefone as driver_telefone,
+          b.placa as driver_placa,
+          b.veiculo as driver_veiculo,
+          b.cor_veiculo as driver_cor_veiculo,
+          b.avatar as driver_avatar
+        from corridas a
+        left join users b on a.driver_id = b.id
+        where a.client_id = ${client_id}
+        and a.active = true
       `);
   }
 
@@ -248,6 +269,38 @@ class CorridasRepository implements ICorridasRepository {
     WHERE c.id = '${id}'
     AND c.active = true
     AND c.accept = false;
+      `);
+  }
+
+  async getRidePendingActiveById(id: string): Promise<Corrida[]> {
+    return this.repository.query(`
+    SELECT
+    c.*,
+    cli.id AS client_id,
+    cli.nome AS client_nome,
+    cli.sobre_nome AS client_sobrenome,
+    cli.email AS client_email,
+    cli.telefone AS client_telefone,
+    cli.cpf_cnpj AS client_cpf,
+    cli.universidade AS client_universidade,
+    cli.curso AS client_curso,
+    mot.id AS driver_id,
+    mot.nome AS driver_nome,
+    mot.sobre_nome AS driver_sobrenome,
+    mot.email AS driver_email,
+    mot.telefone AS driver_telefone,
+    mot.cpf_cnpj AS driver_cpf,
+    mot.placa AS driver_placa,
+    mot.veiculo AS driver_veiculo,
+    mot.cor_veiculo AS driver_cor_veiculo,
+    mot.ano_veiculo AS driver_ano_veiculo,
+    mot.numero_cnh AS driver_cnh
+    FROM corridas c
+    left JOIN users cli ON c.client_id = cli.id
+    LEFT JOIN users mot ON c.driver_id = mot.id
+    WHERE c.id = '${id}'
+    AND c.active = true
+    AND c.accept = true;
       `);
   }
 }
